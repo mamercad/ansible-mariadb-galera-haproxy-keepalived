@@ -1,0 +1,27 @@
+---
+# vars file for ansible-mariadb-galera-haproxy-keepalived
+
+keepalived:
+  interface: ens3
+  virtual_router_id: 51
+  priority: 100
+  advert_int: 1
+  auth_pass: 1111
+  virtual_ip: 192.168.1.100/24
+
+haproxy:
+  frontend_port: 3306
+  backend_host:
+    - id: 1
+      host: mariadb1.localdomain
+      port: 3306
+    - id: 2
+      host: mariadb2.localdomain
+      port: 3306
+    - id: 3
+      host: mariadb3.localdomain
+      port: 3306
+  stats:
+    port: 9000
+    user: admin
+    pass: password

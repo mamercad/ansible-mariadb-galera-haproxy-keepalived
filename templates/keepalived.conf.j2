@@ -1,0 +1,18 @@
+global_defs {
+  router_id {{ ansible_hostname }}
+}
+
+vrrp_instance VI_1 {
+   state MASTER
+   interface {{ keepalived['interface'] }}
+   virtual_router_id {{ keepalived['virtual_router_id'] }}
+   priority {{ keepalived['priority'] }}
+   advert_int {{ keepalived['advert_int'] }}
+   authentication {
+        auth_type PASS
+        auth_pass {{ keepalived['auth_pass'] }}
+   }
+   virtual_ipaddress {
+      {{ keepalived['virtual_ip'] }} dev {{ keepalived['interface'] }}
+   }
+}

@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-mariadb-galera-haproxy-keepalived
+
+- name: selinux permissive
+  selinux: policy=targeted state=permissive
+
+- name: firewalld stopped
+  service: name=firewalld state=stopped enabled=no
+
+- name: install keepalived
+  yum: name=keepalived state=present
+
+- name: deploy keepalived.conf.j2
+  template: src=keepalived.conf.j2 dest=/etc/keepalived/keepalived.conf
+  notify: restart-keepalived
+
+- name: start and enable keepalived
+  service: name=keepalived state=started enabled=yes
+
+- name: install haproxy
+  yum: name=haproxy state=present
+
+- name: deploy haproxy.conf.j2
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  notify: restart-haproxy
