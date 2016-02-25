@@ -41,7 +41,7 @@ Example Playbook
     - hosts:
         - marialb
       roles:
-        - mariadb-galera-haproxy-keepalived
+        - mamercad.mariadb-galera-haproxy-keepalived
 
 License
 -------
